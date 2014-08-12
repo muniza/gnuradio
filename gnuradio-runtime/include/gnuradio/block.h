@@ -75,6 +75,12 @@ namespace gr {
 
     virtual ~block();
 
+    // set accel flag through block constructor
+    void set_accel(const bool accel, const size_t port = 0);
+
+    // check whether port can be accelerated
+    bool can_accel(const size_t port) const;
+
     /*!
      * Assume block computes y_i = f(x_i, x_i-1, x_i-2, x_i-3...)
      * History is the number of x_i's that are examined to produce one y_i.
@@ -590,6 +596,7 @@ namespace gr {
     int                   d_min_noutput_items;
     tag_propagation_policy_t d_tag_propagation_policy; // policy for moving tags downstream
     std::vector<int>      d_affinity;              // thread affinity proc. mask
+    std::vector<bool>     d_accel;					// the block accel flag as global
     int                   d_priority;              // thread priority level
     bool                  d_pc_rpc_set;
     bool                  d_update_rate;           // should sched update rel rate?

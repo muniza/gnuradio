@@ -101,6 +101,11 @@ namespace gr {
     for(int i = 0; i < noutputs; i++) {
       grblock->expand_minmax_buffer(i);
 
+      // See if we can find the accel block
+      if (cast_to_block_sptr(block)->can_accel(i)) {
+          	  std::cout << "---- ACCEL BLOCK FOUND: " << block << std::endl;
+      }
+
       buffer_sptr buffer = allocate_buffer(block, i);
       if(FLAT_FLOWGRAPH_DEBUG)
         std::cout << "Allocated buffer for output " << block << ":" << i << std::endl;

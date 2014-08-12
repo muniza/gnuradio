@@ -112,6 +112,18 @@ namespace gr {
     global_block_registry.unregister_primitive(symbol_name());
   }
 
+  void
+  block::set_accel(const bool accel, const size_t port){
+	  d_accel.resize(std::max<size_t>(port+1, d_accel.size()));
+	  d_accel.at(port) = accel;
+  }
+
+  bool
+  block::can_accel(const size_t port) const {
+	  if (d_accel.size() <= port) return false;
+	  return d_accel.at(port) && this->fixed_rate();
+  }
+
   unsigned
   block::history() const
   {
