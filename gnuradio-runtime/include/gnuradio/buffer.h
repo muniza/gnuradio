@@ -57,6 +57,9 @@ namespace gr {
   public:
     virtual ~buffer();
 
+    // return base address of the buffer
+    void * base() { return &d_base[0]; }
+
     /*!
      * \brief return number of items worth of space available for writing
      */

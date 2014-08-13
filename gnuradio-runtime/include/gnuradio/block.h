@@ -75,6 +75,12 @@ namespace gr {
 
     virtual ~block();
 
+    // public buffer so that grblock can use it
+    buffer_sptr           d_buf;
+
+    // used in the work function to get the buffer object
+    buffer_sptr get_buffer() const { return d_buf; }
+
     // set accel flag through block constructor
     void set_accel(const bool accel, const size_t port = 0);
 

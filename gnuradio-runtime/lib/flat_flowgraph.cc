@@ -100,13 +100,18 @@ namespace gr {
 
     for(int i = 0; i < noutputs; i++) {
       grblock->expand_minmax_buffer(i);
+      buffer_sptr buffer = allocate_buffer(block, i);
 
       // See if we can find the accel block
       if (cast_to_block_sptr(block)->can_accel(i)) {
           	  std::cout << "---- ACCEL BLOCK FOUND: " << block << std::endl;
+          	  // print buffer base address and size
+        	  std::cout << "-- bufsize(): " << buffer->bufsize() << std::endl;
+        	  std::cout << "-- bufbase(): " << buffer->base() << std::endl;
+        	  // set buffer as our global buffer
+        	  grblock->d_buf = buffer;
       }
 
-      buffer_sptr buffer = allocate_buffer(block, i);
       if(FLAT_FLOWGRAPH_DEBUG)
         std::cout << "Allocated buffer for output " << block << ":" << i << std::endl;
       detail->set_output(i, buffer);
